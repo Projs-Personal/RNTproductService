@@ -29,6 +29,11 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductResponse>> getAllProduct() {
+        try {       //sleep of 5 sec to respond a slowly responding api for our circuit breakers -> if 5 sec delay for 5 times -> circuit breaker opens, then instantaneously it will give             Thread.sleep(5000);
+            Thread.sleep(0);    //make if 5000 to check
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 }
